@@ -6,7 +6,7 @@ const FAT_SIZE* = SECTOR_SIZE * 9
 const ROOT_SECTOR* = 19
 const ROOT_SECTOR_END* = 32
 const ROOT_POS* = 19 * SECTOR_SIZE
-const START_SECTOR* = 31
+const START_SECTOR*: uint32 = 31
 const DATA_START* = 31 * SECTOR_SIZE
 
 const NUM_DIR_ENTRIES* = 16

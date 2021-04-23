@@ -18,5 +18,7 @@ $(BINDIR):
 test: all
 	./$(BINDIR)/$(BINS) ./random.img ./outputs
 
+debug: $(MAIN)
+	$(NIMC) c $(NIMFLAGS) --debugger:native -o:$(BINDIR)/recovery $(MAIN)
 clean:
 	rm -rf $(BINDIR)
