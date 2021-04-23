@@ -9,10 +9,14 @@ const ROOT_POS* = 19 * SECTOR_SIZE
 const START_SECTOR* = 31
 const DATA_START* = 31 * SECTOR_SIZE
 
-const NUM_DIR_ENTRIES = 16
-const DIR_NUM_BYTES = 32
-const FILE_ENTRY = 1
-const DIR_ENTRY = 2
+const NUM_DIR_ENTRIES* = 16
+const DIR_NUM_BYTES* = 32
+const FILE_ENTRY* = 1
+const DIR_ENTRY* = 2
+const FNAME_BYTES* = 8
+const EXT_BYTES* = 3
+const FIRST_CLUSTER_BYTES* = 2
+const FILE_SIZE_BYTES* = 4
 
 type
   FatDisk* = ref FatDiskObj

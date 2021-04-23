@@ -1,5 +1,6 @@
 NIMC = nim
 
+NIMFLAGS = -w:on
 BINDIR = bin
 BINS = recovery
 
@@ -9,7 +10,7 @@ SRCS := fat/fat.nim fat/headers.nim fat/fileops.nim
 all: $(BINDIR)/$(BINS)
 
 $(BINDIR)/recovery: $(MAIN) $(SRCS)
-	$(NIMC) c -o:$@ $<
+	$(NIMC) c $(NIMFLAGS) -o:$@ $<
 
 $(BINDIR):
 	mkdir -p $@
