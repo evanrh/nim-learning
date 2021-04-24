@@ -23,5 +23,5 @@ type
   FatDiskObj = object
     output_dir*: string
     disk_img*: File
-    fat*: array[FAT_SIZE div 3, uint32]
+    fat*: array[FAT_SIZE div 3, uint16]
     disk*: array[DISK_SIZE, uint8]

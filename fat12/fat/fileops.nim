@@ -81,6 +81,28 @@ proc writeFile(fs: FatDisk, ent: DirEntry) =
 
       write(output, str)
       size -= SECTOR_SIZE
+      cluster = fs.fat[cluster]
+
+    if size > cast[uint](0):
+      let
+        offset: uint = sectorStart(cluster)
+      let str: string = cast[string](fs.disk[offset .. (offset + size - 1)])
+      write(output, str)
+
+  else:
+    while fs.fat[cluster] == 0x000 and size > cast[uint](0):
+      let
+        offset: uint = sectorStart(cluster)
+      var
+        writeSize: uint = SECTOR_SIZE
+
+      if SECTOR_SIZE > size:
+        writeSize = size
+
+      let str: string = cast[string](fs.disk[offset .. (offset + writeSize - 1)])
+      write(output, str)
+      size -= SECTOR_SIZE
+      cluster += 1
 
   setCurrentDir(cwd)
   close(output)

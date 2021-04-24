@@ -23,13 +23,16 @@ proc close*(fs: var FatDisk) =
 proc readFS(fs: var FatDisk) =
   setFilePos(fs.disk_img, FAT1_POS, fspSet)
   var bytes: array[3, uint16]
-  var buf: pointer = addr bytes
+  var buf: array[3, uint8]
 
-  for i in countup(1, FAT_SIZE div 3 - 1):
-    let count = readBuffer(fs.disk_img, buf, 3)
+  for i in countup(0, FAT_SIZE div 6 - 1):
+    let count = readBytes(fs.disk_img, buf, 0, 3)
 
-    fs.fat[i - 1] = (bytes[0] and 0xFF) or ((bytes[1] and 0xF) shl 8)
-    fs.fat[i] = ((bytes[2] and 0xFF) shl 4) or ((bytes[1] and 0xF0) shr 4)
+    bytes[0] = buf[0]
+    bytes[1] = buf[1]
+    bytes[2] = buf[2]
+    fs.fat[2 * i] = (bytes[0] and 0xFF) or ((bytes[1] and 0xF) shl 8)
+    fs.fat[(2 * i) + 1] = ((bytes[2] and 0xFF) shl 4) or ((bytes[1] and 0xF0) shr 4)
 
 proc findFiles*(fs: var FatDisk) =
   readFS(fs)
