@@ -1,11 +1,18 @@
 import headers
 import fileops
+import os
 
 export headers.FatDisk
 
 proc initMem(fs: var FatDisk) =
   setFilePos(fs.disk_img, 0, fspSet)
   discard readBytes(fs.disk_img, fs.disk, 0, DISK_SIZE)
+
+proc checkDir(dir: string) =
+  if dirExists(dir):
+    return
+  else:
+    createDir(dir)
 
 proc init*(fs: var FatDisk, img_file: string, out_dir: string): bool =
   let ret = open(fs.disk_img, img_file, fmRead)
@@ -15,6 +22,7 @@ proc init*(fs: var FatDisk, img_file: string, out_dir: string): bool =
 
   result = true
   fs.output_dir = out_dir
+  checkDir(out_dir)
   fs.initMem()
 
 proc close*(fs: var FatDisk) =

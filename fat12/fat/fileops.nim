@@ -56,7 +56,7 @@ proc printFile(ent: DirEntry, path: string) =
 
 proc writeFile(fs: FatDisk, ent: DirEntry) =
   var
-    size: uint = ent.size
+    size: uint32 = ent.size
     cluster: uint16 = ent.first_cluster
     output: File
   let
@@ -68,7 +68,7 @@ proc writeFile(fs: FatDisk, ent: DirEntry) =
   fileCount += 1
 
   if not ent.deleted:
-    while size >= cast[uint](SECTOR_SIZE):
+    while size >= cast[uint32](SECTOR_SIZE):
       let
         offset: uint = sectorStart(cluster)
       var
